@@ -1,0 +1,185 @@
+<!-- Dashboard Overview Section -->
+<section id="overview" class="content-section active">
+    <div class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2 class="hero-title">BMW Sales Intelligence</h2>
+                <p class="hero-subtitle">Real-time analytics and insights for luxury automotive market</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="stat-number" id="heroSales">0</span>
+                        <span class="stat-label">Total Sales</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number" id="heroRevenue">$0M</span>
+                        <span class="stat-label">Revenue</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number" id="heroModels">0</span>
+                        <span class="stat-label">Models</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image" id="heroImage">
+                <!-- BMW Logo will be inserted here -->
+            </div>
+        </div>
+
+        <div class="header-section" style="margin-top: 3rem;">
+            <h3>Filters & Controls</h3>
+            <div class="filter-group">
+                <label>Year:</label>
+                <select id="yearFilter" class="filter-select">
+                    <option value="">All Years</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="premium-stats">
+            <div class="premium-stat-card">
+                <span class="premium-stat-icon">📈</span>
+                <div class="premium-stat-content">
+                    <h4>Total Sales Volume</h4>
+                    <p class="premium-stat-value" id="statSalesVolume">0</p>
+                </div>
+            </div>
+            <div class="premium-stat-card">
+                <span class="premium-stat-icon">💰</span>
+                <div class="premium-stat-content">
+                    <h4>Total Revenue</h4>
+                    <p class="premium-stat-value" id="statRevenue">$0</p>
+                </div>
+            </div>
+            <div class="premium-stat-card">
+                <span class="premium-stat-icon">🏆</span>
+                <div class="premium-stat-content">
+                    <h4>Top Model</h4>
+                    <p class="premium-stat-value" id="statTopModel">-</p>
+                </div>
+            </div>
+            <div class="premium-stat-card">
+                <span class="premium-stat-icon">🌍</span>
+                <div class="premium-stat-content">
+                    <h4>Global Regions</h4>
+                    <p class="premium-stat-value" id="statRegions">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Key Insights</h3>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;">Real-time market analysis</p>
+
+    <div class="charts-row">
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Sales Trend</h3>
+                <span style="background: var(--primary-blue); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Yearly</span>
+            </div>
+            <canvas id="salesByYearChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Market Classification</h3>
+                <span style="background: var(--accent-blue); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Status</span>
+            </div>
+            <canvas id="salesClassificationChart"></canvas>
+        </div>
+    </div>
+
+    <div class="charts-row">
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Top Performing Models</h3>
+                <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Top 5</span>
+            </div>
+            <canvas id="topModelsChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Fuel Type Distribution</h3>
+                <span style="background: #fd7e14; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Breakdown</span>
+            </div>
+            <canvas id="fuelTypeChart"></canvas>
+        </div>
+    </div>
+
+    <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Models Showcase</h3>
+    <div class="models-grid" id="modelsGrid">
+        <!-- Models will be populated dynamically -->
+    </div>
+
+    <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Regional Performance</h3>
+    <div class="regions-grid" id="regionsGrid">
+        <!-- Regions will be populated dynamically -->
+    </div>
+
+    <div class="table-container">
+        <h3 style="padding: 1rem 1.5rem 0; margin: 0;">Latest Sales Data</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>Region</th>
+                    <th>Color</th>
+                    <th>Fuel Type</th>
+                    <th>Price</th>
+                    <th>Sales Vol</th>
+                    <th>Classification</th>
+                </tr>
+            </thead>
+            <tbody id="dashboardTableBody">
+                <!-- Table rows will be populated dynamically -->
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<style>
+.premium-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.premium-stat-card {
+    background: linear-gradient(135deg, var(--white) 0%, #f8f9fa 100%);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary-blue);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.premium-stat-card:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.premium-stat-icon {
+    font-size: 2.5rem;
+}
+
+.premium-stat-content h4 {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.premium-stat-value {
+    margin: 0.5rem 0 0 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+</style>

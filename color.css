@@ -1,0 +1,137 @@
+/* Color Palette */
+
+:root {
+    /* BMW Brand Colors */
+    --bmw-black: #1a1a1a;
+    --bmw-blue: #0066cc;
+    --bmw-silver: #c0c0c0;
+    --bmw-white: #ffffff;
+    
+    /* Extended Palette */
+    --color-red: #dc143c;
+    --color-blue: #0066cc;
+    --color-green: #10b981;
+    --color-orange: #ff8c00;
+    --color-purple: #9333ea;
+    --color-cyan: #06b6d4;
+    --color-yellow: #f59e0b;
+}
+
+/* Neutral Colors */
+.bg-primary-black {
+    background-color: var(--primary-black);
+}
+
+.bg-primary-blue {
+    background-color: var(--primary-blue);
+}
+
+.bg-silver {
+    background-color: var(--silver);
+}
+
+.bg-light-gray {
+    background-color: var(--light-gray);
+}
+
+.bg-white {
+    background-color: var(--white);
+}
+
+/* Text Colors */
+.text-primary-black {
+    color: var(--primary-black);
+}
+
+.text-primary-blue {
+    color: var(--primary-blue);
+}
+
+.text-silver {
+    color: var(--silver);
+}
+
+.text-white {
+    color: var(--white);
+}
+
+/* Status Colors */
+.text-success {
+    color: var(--success);
+}
+
+.text-warning {
+    color: var(--warning);
+}
+
+.text-danger {
+    color: var(--danger);
+}
+
+.bg-success {
+    background-color: rgba(16, 185, 129, 0.1);
+    border-left: 4px solid var(--success);
+    color: var(--success);
+}
+
+.bg-warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    border-left: 4px solid var(--warning);
+    color: var(--warning);
+}
+
+.bg-danger {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-left: 4px solid var(--danger);
+    color: var(--danger);
+}
+
+/* Chart Colors */
+.chart-color-1 { color: #0066cc; }
+.chart-color-2 { color: #ff6b6b; }
+.chart-color-3 { color: #10b981; }
+.chart-color-4 { color: #f59e0b; }
+.chart-color-5 { color: #9333ea; }
+.chart-color-6 { color: #06b6d4; }
+.chart-color-7 { color: #3b82f6; }
+.chart-color-8 { color: #ec4899; }
+
+/* Badge Colors */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.badge-primary {
+    background-color: rgba(0, 102, 204, 0.1);
+    color: var(--primary-blue);
+}
+
+.badge-success {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+}
+
+.badge-danger {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+}
+
+.badge-warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+}
+
+/* Gradients */
+.gradient-bmw {
+    background: linear-gradient(135deg, var(--primary-black) 0%, var(--primary-blue) 100%);
+    color: var(--white);
+}
+
+.gradient-silver {
+    background: linear-gradient(135deg, var(--silver) 0%, var(--light-gray) 100%);
+    color: var(--primary-black);
+}

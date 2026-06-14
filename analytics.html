@@ -1,0 +1,70 @@
+<!-- Analytics Section -->
+<section id="analytics" class="content-section">
+    <div class="header-section">
+        <h2>📊 Analytics Dashboard</h2>
+        <div class="filter-group">
+            <label>Year:</label>
+            <select id="yearFilter" class="filter-select">
+                <option value="">All Years</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="charts-row">
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Sales by Region (Revenue)</h3>
+                <span style="background: var(--primary-blue); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Multi-Axis</span>
+            </div>
+            <canvas id="regionComparisonChart"></canvas>
+        </div>
+    </div>
+
+    <div class="charts-row">
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Price vs Sales Performance</h3>
+                <span style="background: var(--accent-blue); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Bubble</span>
+            </div>
+            <canvas id="priceVsSalesChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Transmission Analysis</h3>
+                <span style="background: #6f42c1; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Radar</span>
+            </div>
+            <canvas id="transmissionChart"></canvas>
+        </div>
+    </div>
+
+    <div class="charts-row">
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Fuel Type Trends Over Time</h3>
+                <span style="background: #fd7e14; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Multi-Line</span>
+            </div>
+            <canvas id="fuelTrendChart"></canvas>
+        </div>
+    </div>
+
+    <div class="charts-row">
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Color Popularity Distribution</h3>
+                <span style="background: #20c997; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Bar</span>
+            </div>
+            <canvas id="colorChart"></canvas>
+        </div>
+    </div>
+
+    <div class="charts-row">
+        <div class="chart-container full-width">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">All Models Performance Comparison</h3>
+                <span style="background: var(--warning); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Extended Bar</span>
+            </div>
+            <canvas id="modelDetailsChart"></canvas>
+        </div>
+    </div>
+</section>

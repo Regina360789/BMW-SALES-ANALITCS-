@@ -1,0 +1,134 @@
+<!-- Gallery Section -->
+<section id="gallery" class="content-section">
+    <div class="header-section">
+        <h2>🖼️ BMW Models Gallery</h2>
+        <div class="search-group">
+            <input type="text" id="gallerySearch" class="search-box" placeholder="Search models...">
+        </div>
+    </div>
+
+    <div class="gallery-container">
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Gallery items will be populated dynamically -->
+        </div>
+    </div>
+
+    <div class="gallery-stats">
+        <div class="stat-card">
+            <h4>🏎️ Models in Database</h4>
+            <p class="stat-value" id="galleryModelCount">0</p>
+        </div>
+        <div class="stat-card">
+            <h4>📊 Total Records</h4>
+            <p class="stat-value" id="galleryRecordCount">0</p>
+        </div>
+        <div class="stat-card">
+            <h4>💰 Average Price</h4>
+            <p class="stat-value" id="galleryAvgPrice">$0</p>
+        </div>
+        <div class="stat-card">
+            <h4>🌟 Most Popular</h4>
+            <p class="stat-value" id="galleryPopular">-</p>
+        </div>
+    </div>
+</section>
+
+<style>
+.gallery-container {
+    margin: 2rem 0;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.gallery-item {
+    background: linear-gradient(135deg, var(--white) 0%, #f8f9fa 100%);
+    border: 2px solid var(--border-color);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-blue);
+}
+
+.gallery-item-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: white;
+}
+
+.gallery-item-content {
+    padding: 1.5rem;
+}
+
+.gallery-item h3 {
+    color: var(--primary-blue);
+    margin: 0 0 1rem 0;
+    font-size: 1.3rem;
+}
+
+.gallery-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.gallery-stat:last-child {
+    border-bottom: none;
+}
+
+.gallery-stat-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.gallery-stat-value {
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+.gallery-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .gallery-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-stats {
+        grid-template-columns: 1fr;
+    }
+}
+</style>

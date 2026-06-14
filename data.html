@@ -1,0 +1,85 @@
+<!-- Data Table Section -->
+<section id="data" class="content-section">
+    <div class="header-section">
+        <h2>📊 Sales Data</h2>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <div class="search-group">
+                <input type="text" id="dataSearch" class="search-box" placeholder="Search by model, region, color...">
+            </div>
+            <div class="filter-group">
+                <label>Year:</label>
+                <select id="yearFilter" class="filter-select">
+                    <option value="">All Years</option>
+                </select>
+            </div>
+            <button id="exportBtn" class="btn btn-primary" style="padding: 0.75rem 1.5rem; cursor: pointer;">📥 Export CSV</button>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-icon">📊</span>
+            <h3>Total Records</h3>
+            <p class="stat-value" id="totalRecords">0</p>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">💰</span>
+            <h3>Total Value</h3>
+            <p class="stat-value" id="totalValue">$0</p>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">📈</span>
+            <h3>Avg Price</h3>
+            <p class="stat-value" id="avgPrice">$0</p>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">🏆</span>
+            <h3>High/Low Ratio</h3>
+            <p class="stat-value" id="classRatio">-</p>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>Region</th>
+                    <th>Color</th>
+                    <th>Fuel Type</th>
+                    <th>Transmission</th>
+                    <th>Engine (L)</th>
+                    <th>Mileage (KM)</th>
+                    <th>Price (USD)</th>
+                    <th>Sales Volume</th>
+                    <th>Classification</th>
+                </tr>
+            </thead>
+            <tbody id="dataTableBody">
+                <!-- Table rows will be populated dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <div style="text-align: center; padding: 1.5rem; color: var(--text-secondary);">
+        <p>Showing first 100 records • Total records in database: <span id="dbTotalRecords">0</span></p>
+    </div>
+</section>
+
+<style>
+#exportBtn {
+    background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+#exportBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+</style>

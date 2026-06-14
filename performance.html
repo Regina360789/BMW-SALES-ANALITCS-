@@ -1,0 +1,81 @@
+<!-- Performance Analytics Section -->
+<section id="performance" class="content-section">
+    <div class="header-section">
+        <h2>⚡ Performance Analytics</h2>
+        <div class="filter-group">
+            <label>Year:</label>
+            <select id="yearFilter" class="filter-select">
+                <option value="">All Years</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-icon">🚗</span>
+            <h3>Avg Engine Size</h3>
+            <p class="stat-value" id="avgEngine">0L</p>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">⛽</span>
+            <h3>Primary Fuel Type</h3>
+            <p class="stat-value" id="primaryFuel">-</p>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">🔧</span>
+            <h3>Primary Transmission</h3>
+            <p class="stat-value" id="primaryTrans">-</p>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">📊</span>
+            <h3>Avg Mileage</h3>
+            <p class="stat-value" id="avgMileage">0 KM</p>
+        </div>
+    </div>
+
+    <div class="charts-row">
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Sales Trend Over Years</h3>
+                <span style="background: var(--primary-blue); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Line</span>
+            </div>
+            <canvas id="salesByYearChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Market Classification</h3>
+                <span style="background: var(--accent-blue); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Doughnut</span>
+            </div>
+            <canvas id="salesClassificationChart"></canvas>
+        </div>
+    </div>
+
+    <div class="charts-row">
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Fuel Type Distribution</h3>
+                <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Pie</span>
+            </div>
+            <canvas id="fuelTypeChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Transmission Types</h3>
+                <span style="background: #6f42c1; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Radar</span>
+            </div>
+            <canvas id="transmissionChart"></canvas>
+        </div>
+    </div>
+
+    <div class="charts-row">
+        <div class="chart-container full-width">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">Engine Size Distribution by Sales</h3>
+                <span style="background: #fd7e14; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Bubble</span>
+            </div>
+            <canvas id="priceVsSalesChart"></canvas>
+        </div>
+    </div>
+</section>
