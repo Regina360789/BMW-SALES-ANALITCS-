@@ -1,0 +1,403 @@
+1   <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW Sales Analytics Platform</title>
+    <link rel="stylesheet" href="css/elegant.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <!-- Leaflet map styles -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- ============== SIDEBAR ============== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-wrapper-sidebar">
+                    <svg class="logo-bmw-mini" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="58" fill="none" stroke="#12263f" stroke-width="2"/>
+                        <path d="M 60 2 A 58 58 0 0 0 2 60 L 60 60 Z" fill="#12263f"/>
+                        <path d="M 60 2 A 58 58 0 0 1 118 60 L 60 60 Z" fill="#f0f0f0"/>
+                        <path d="M 60 118 A 58 58 0 0 1 2 60 L 60 60 Z" fill="#f0f0f0"/>
+                        <path d="M 60 118 A 58 58 0 0 0 118 60 L 60 60 Z" fill="#12263f"/>
+                        <line x1="60" y1="2" x2="60" y2="118" stroke="#1a1a1a" stroke-width="1.5"/>
+                        <line x1="2" y1="60" x2="118" y2="60" stroke="#1a1a1a" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <h3>BMW</h3>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="nav-link active" data-section="overview" title="Dashboard"><span class="nav-icon">📈</span><span class="nav-text">Overview</span></a></li>
+                    <li><a href="#" class="nav-link" data-section="models" title="Models"><span class="nav-icon">🚘</span><span class="nav-text">Models</span></a></li>
+                    <li><a href="#" class="nav-link" data-section="regions" title="Regions"><span class="nav-icon">🗺️</span><span class="nav-text">Regions</span></a></li>
+                    <li><a href="#" class="nav-link" data-section="performance" title="Performance"><span class="nav-icon">⚙️</span><span class="nav-text">Performance</span></a></li>
+                    <li><a href="#" class="nav-link" data-section="analytics" title="Analytics"><span class="nav-icon">📊</span><span class="nav-text">Analytics</span></a></li>
+                    <li><a href="#" class="nav-link" data-section="gallery" title="Gallery"><span class="nav-icon">🖼️</span><span class="nav-text">Gallery</span></a></li>
+                    <li><a href="#" class="nav-link" data-section="data" title="Data"><span class="nav-icon">🗃️</span><span class="nav-text">Data</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <label>Year:</label>
+                <select id="yearFilter" class="year-filter sidebar-select">
+                    <option value="">All Years</option>
+                </select>
+            </div>
+        </aside>
+
+        <!-- ============== MAIN CONTENT ============== -->
+        <div class="app-container">
+            <!-- OVERVIEW SECTION -->
+            <section id="overview" class="content-section active">
+                <div class="dashboard-hero">
+                    <div style="flex: 1; z-index: 2;">
+                        <h2 style="font-size: 3.5rem; font-weight: 800; margin: 0 0 1rem 0; letter-spacing: -1px; color: white;">BMW Sales Intelligence</h2>
+                        <p style="font-size: 1.2rem; color: rgba(255,255,255,0.9); margin: 0 0 2rem 0; max-width: 55%; line-height: 1.6;">Comprehensive analytics for BMW's global luxury automotive market. Real-time insights into sales performance, regional trends, and market opportunities.</p>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 55%;">
+                            <div>
+                                <div style="font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem; color: white;">
+                                    <span id="heroSales">0</span>
+                                </div>
+                                <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; color: rgba(255,255,255,0.8);">Total Sales</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem; color: white;">
+                                    <span id="heroRevenue">$0M</span>
+                                </div>
+                                <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; color: rgba(255,255,255,0.8);">Revenue</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem; color: white;">
+                                    <span id="heroModels">0</span>
+                                </div>
+                                <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; color: rgba(255,255,255,0.8);">Models</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="stat-card gradient-primary">
+                        <div class="stat-icon">📊</div>
+                        <h4 style="margin: 1rem 0 0.5rem 0; font-size: 0.9rem;">Total Volume</h4>
+                        <p id="totalSales" style="font-size: 1.8rem; font-weight: 700; margin: 0;">0</p>
+                    </div>
+                    <div class="stat-card gradient-accent">
+                        <div class="stat-icon">💰</div>
+                        <h4 style="margin: 1rem 0 0.5rem 0; font-size: 0.9rem;">Total Revenue</h4>
+                        <p id="totalRevenue" style="font-size: 1.8rem; font-weight: 700; margin: 0;">$0</p>
+                    </div>
+                    <div class="stat-card gradient-success">
+                        <div class="stat-icon">🏆</div>
+                        <h4 style="margin: 1rem 0 0.5rem 0; font-size: 0.9rem;">Top Model</h4>
+                        <p id="topModel" style="font-size: 1.8rem; font-weight: 700; margin: 0;">-</p>
+                    </div>
+                    <div class="stat-card gradient-info">
+                        <div class="stat-icon">🌍</div>
+                        <h4 style="margin: 1rem 0 0.5rem 0; font-size: 0.9rem;">Regions</h4>
+                        <p id="totalRegions" style="font-size: 1.8rem; font-weight: 700; margin: 0;">0</p>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-grid">
+                    <div class="chart-box">
+                        <h3>Sales Trend</h3>
+                        <canvas id="salesByYearChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h3>Market Classification</h3>
+                        <canvas id="salesClassificationChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-box">
+                        <h3>Top 5 Models</h3>
+                        <canvas id="topModelsChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h3>Fuel Types</h3>
+                        <canvas id="fuelTypeChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Models & Regions Grid -->
+                <div class="showcase-section">
+                    <h3>Featured Models</h3>
+                    <div class="showcase-grid" id="modelsGrid"></div>
+                </div>
+            </section>
+
+            <!-- MODELS SECTION -->
+            <section id="models" class="content-section">
+                <div class="section-header">
+                    <h2>BMW Model Excellence</h2>
+                    <p>Comprehensive performance metrics across our model lineup</p>
+                </div>
+
+                <!-- Top 5 Best-selling Models Section (moved up) -->
+                <div style="background: white; border-radius: 12px; padding: 2rem; margin-top: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <h3 style="font-size: 1.3rem; font-weight: 700; color: #12263f; margin: 0 0 1.5rem 0;">🏆 Top 5 Best-selling Models Worldwide</h3>
+                    <ol id="topModelRanking" style="margin: 0; padding-left: 1.5rem; color: #333; font-size: 0.95rem; line-height: 2; list-style-position: outside;"></ol>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; margin-bottom: 2rem;">
+                    <div class="chart-card">
+                        <h3>All Models Performance</h3>
+                        <canvas id="modelDetailsChart"></canvas>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #12263f 0%, #3b6bb5 100%); border-radius: 12px; padding: 2rem; color: white; display: flex; flex-direction: column; justify-content: center;">
+                        <h4 style="font-size: 1.2rem; margin-bottom: 1.5rem; font-weight: 700; margin-top: 0;">Model Insights</h4>
+                        <div id="modelInsights" style="font-size: 0.95rem; line-height: 1.8; opacity: 0.95;">
+                            <p>Loading insights...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="showcase-grid" id="modelsDetailGrid"></div>
+            </section>
+
+            <!-- REGIONS SECTION -->
+            <section id="regions" class="content-section">
+                <div class="section-header">
+                    <h2>Global Market Distribution</h2>
+                    <p>Regional sales performance and market opportunities</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    <div class="chart-card">
+                        <h3>Sales by Region</h3>
+                        <canvas id="salesByRegionChart"></canvas>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #12263f 0%, #3b6bb5 100%); border-radius: 12px; padding: 2rem; color: white; display: flex; flex-direction: column; justify-content: center;">
+                        <h4 style="font-size: 1.2rem; margin-bottom: 1.5rem; font-weight: 700; margin-top: 0;">Regional Insights</h4>
+                        <div id="regionInsights" style="font-size: 0.95rem; line-height: 1.8; opacity: 0.95;">
+                            <p>Loading insights...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.3rem; font-weight: 700; color: #12263f; margin: 2rem 0 1.5rem 0;">Regional Breakdown</h3>
+                <div class="chart-container full-width" style="margin-bottom: 1.5rem;">
+                    <h3>Regional Map</h3>
+                    <div style="display:flex; justify-content:center;">
+                        <div id="regionsMap" style="width:800px; max-width:100%; height:450px; border-radius:8px; overflow:hidden; background:#f5f7fb;"></div>
+                    </div>
+                    <div id="regionsMapLegend"></div>
+                </div>
+                <div class="showcase-grid" id="regionsDetailGrid"></div>
+            </section>
+
+            <!-- PERFORMANCE SECTION -->
+            <section id="performance" class="content-section">
+                <div class="section-header">
+                    <h2>Performance Analytics</h2>
+                    <p>Vehicle specifications and market performance metrics</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-bottom: 2rem;">
+                    <div class="chart-card">
+                        <h3>Sales Trend</h3>
+                        <canvas id="salesByYearChart2"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Classification</h3>
+                        <canvas id="salesClassificationChart2"></canvas>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-bottom: 2rem;">
+                    <div class="chart-card">
+                        <h3>Fuel Types</h3>
+                        <canvas id="fuelTypeChart2"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Transmission Types</h3>
+                        <canvas id="transmissionChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Price vs Performance</h3>
+                    <canvas id="priceVsSalesChart"></canvas>
+                </div>
+            </section>
+
+            <!-- ANALYTICS SECTION -->
+            <section id="analytics" class="content-section">
+                <div class="section-header">
+                    <h2>📊 Analytics Dashboard</h2>
+                    <p>Comprehensive market analysis and trends</p>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-box">
+                        <h3>Sales by Region (Revenue)</h3>
+                        <canvas id="regionComparisonChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-box">
+                        <h3>Price vs Sales Performance</h3>
+                        <canvas id="priceVsSalesChart2"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h3>Transmission Analysis</h3>
+                        <canvas id="transmissionChart2"></canvas>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-box">
+                        <h3>Fuel Type Trends Over Time</h3>
+                        <canvas id="fuelTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-box">
+                        <h3>Color Popularity Distribution</h3>
+                        <canvas id="colorChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>All Models Performance Comparison</h3>
+                    <canvas id="modelDetailsChart2"></canvas>
+                </div>
+            </section>
+
+            <!-- GALLERY SECTION -->
+            <section id="gallery" class="content-section">
+                <div class="section-header">
+                    <h2>Model Gallery</h2>
+                    <p>Explore our complete BMW model collection</p>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #12263f;">Select Model:</label>
+                    <select id="galleryModelFilter" style="width: 100%; max-width: 400px; padding: 0.75rem; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 1rem; cursor: pointer;">
+                        <option value="">All Models</option>
+                    </select>
+                </div>
+
+                <div class="gallery-grid" id="galleryGrid"></div>
+
+                <!-- Modal untuk detail model -->
+                <div id="modelDetailModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; padding: 1rem;">
+                    <div style="background: white; border-radius: 12px; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h3 id="modalTitle" style="margin: 0; font-size: 1.5rem; color: #12263f;"></h3>
+                            <button onclick="closeModelModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">✕</button>
+                        </div>
+                        <div id="modalContent"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DATA SECTION -->
+            <section id="data" class="content-section">
+                <div class="section-header">
+                    <h2>Data Management</h2>
+                    <p>Search, filter, and export sales data</p>
+                </div>
+
+                <!-- Filter Panel -->
+                <div class="filter-panel">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <label style="display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem; color: #12263f;">Model</label>
+                            <select id="filterModel" class="filter-select">
+                                <option value="">All Models</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem; color: #12263f;">Year</label>
+                            <select id="filterYear" class="filter-select">
+                                <option value="">All Years</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem; color: #12263f;">Region</label>
+                            <select id="filterRegion" class="filter-select">
+                                <option value="">All Regions</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem; color: #12263f;">Fuel Type</label>
+                            <select id="filterFuel" class="filter-select">
+                                <option value="">All Fuel Types</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem; color: #12263f;">Color</label>
+                            <select id="filterColor" class="filter-select">
+                                <option value="">All Colors</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem; color: #12263f;">Search</label>
+                            <input type="text" id="dataSearch" class="filter-select" placeholder="Search...">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+                        <button id="resetFilters" style="padding: 0.7rem 1.5rem; background: #8f95b2; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Reset Filters</button>
+                        <button id="exportBtn" style="padding: 0.7rem 1.5rem; background: linear-gradient(135deg, #12263f, #3b6bb5); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">📥 Export CSV</button>
+                        <button id="addDataBtn" style="padding: 0.7rem 1.5rem; background: #1f6f8b; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; margin-left: auto;">➕ Add Data</button>
+                    </div>
+                </div>
+
+                <!-- Data Stats -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                    <div class="stat-card gradient-primary">
+                        <h4 style="margin: 0;">Records</h4>
+                        <p id="dataRecords" style="font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0 0 0;">0</p>
+                    </div>
+                    <div class="stat-card gradient-accent">
+                        <h4 style="margin: 0;">Total Value</h4>
+                        <p id="dataValue" style="font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0 0 0;">$0</p>
+                    </div>
+                    <div class="stat-card gradient-success">
+                        <h4 style="margin: 0;">Avg Price</h4>
+                        <p id="dataAvgPrice" style="font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0 0 0;">$0</p>
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div style="background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Model</th>
+                                <th>Year</th>
+                                <th>Region</th>
+                                <th>Color</th>
+                                <th>Fuel</th>
+                                <th>Price</th>
+                                <th>Sales</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Leaflet JS (used by regions map) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
